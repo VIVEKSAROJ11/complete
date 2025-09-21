@@ -200,7 +200,7 @@
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
 
     <!-- Navbar -->
-    <nav class="w-full max-w-5xl flex justify-between items-center py-4 px-8 bg-white shadow-lg rounded-xl mb-12">
+    <nav class="w-full max-w-5xl flex justify-between items-center py-4 px-4 bg-white shadow-lg rounded-xl mb-12">
         <div class="flex space-x-6">
             <button class="text-gray-800 font-medium hover:text-gray-600 transition-colors" onclick="showSection('home')">Home</button>
             <button class="text-gray-800 font-medium hover:text-gray-600 transition-colors" onclick="showSection('help')">Help</button>
@@ -218,7 +218,7 @@
     </header>
     
     <!-- Main Tabs for content sections -->
-    <div id="main-tabs-container" class="w-full max-w-5xl flex justify-center space-x-4 mb-4">
+    <div id="main-tabs-container" class="w-full max-w-5xl flex justify-center space-x-1 mb-2">
         <button id="main-trending-tab" class="px-8 py-3 rounded-full font-medium tab-button active" onclick="showSection('trending')">
             Trending
         </button>
@@ -245,7 +245,7 @@
             <!-- Trending Images Content -->
             <div id="trending-images-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Trending Image Card 1 (General) -->
-                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["./Assets/Trending/photo.jpg", "./Assets/Trending/photo-2.jpg", "./Assets/Trending/photo.jpg"]'>
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["./Assets/Trending/photo.jpg", "./Assets/Trending/photo-2.jpg", "./Assets/Trending/photo_3.jpg"]'>
                     <div class="slider-container">
                         <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/photo.jpg" alt="Trending Image 1">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>

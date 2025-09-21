@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import classic serif and clean sans-serif fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f8f9fa; /* Off-white background */
+            transition: background-color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1c1c1e; /* Dark gray background */
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+        }
+        .tab-button {
+            background-color: #e9ecef;
+            color: #495057;
+            transition: background-color 0.2s, color 0.2s;
+            border: 1px solid #dee2e6;
+        }
+        .tab-button.active {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #dee2e6; /* Subtle border */
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .copy-button {
+            background-color: #495057;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .copy-button:hover {
+            background-color: #343a40;
+            transform: scale(1.02);
+        }
+        .dark .tab-button {
+            background-color: #333333;
+            color: #b0b0b0;
+            border-color: #444444;
+        }
+        .dark .tab-button.active {
+            background-color: #e0e0e0;
+            color: #1c1c1e;
+        }
+        .dark .card {
+            background-color: #2c2c2e;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-color: #444444;
+        }
+        .dark .copy-button {
+            background-color: #555555;
+            color: #ffffff;
+        }
+        .dark .copy-button:hover {
+            background-color: #666666;
+        }
+        .dark .bg-gray-50 {
+            background-color: #3a3a3c;
+        }
+        .dark .text-gray-700 {
+            color: #d0d0d0;
+        }
+        .dark .text-gray-600 {
+            color: #a0a0a0;
+        }
+        .theme-switch {
+            width: 48px;
+            height: 28px;
+            background-color: #ccc;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.4s;
+        }
+        .theme-switch::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.4s;
+        }
+        .theme-switch.dark-active {
+            background-color: #e0e0e0;
+        }
+        .theme-switch.dark-active::after {
+            background-color: #4a5568;
+            transform: translateX(20px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .modal-content.dark {
+            background-color: #2d3748;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .dark nav {
+            background-color: #2c2c2e;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .dark nav button {
+            color: #e2e8f0;
+        }
+        .dark nav button:hover {
+            color: #a0aec0;
+        }
+        .dark header h1 {
+            color: #e0e0e0;
+        }
+        .dark header p {
+            color: #a0a0a0;
+        }
+        .dark .text-gray-800 {
+            color: #d0d0d0;
+        }
+        .dark .text-gray-500 {
+            color: #a0a0a0;
+        }
+        /* New slider styles */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .slider-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .slider-prev-btn {
+            left: 0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .slider-next-btn {
+            right: 0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+    <!-- Navbar -->
+    <nav class="w-full max-w-5xl flex justify-between items-center py-4 px-8 bg-white shadow-lg rounded-xl mb-12">
+        <div class="flex space-x-6">
+            <button class="text-gray-800 font-medium hover:text-gray-600 transition-colors" onclick="showSection('home')">Home</button>
+            <button class="text-gray-800 font-medium hover:text-gray-600 transition-colors" onclick="showSection('help')">Help</button>
+            <button class="text-gray-800 font-medium hover:text-gray-600 transition-colors" onclick="openContactForm()">Contact</button>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div id="theme-toggle" class="theme-switch"></div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="header" class="w-full max-w-5xl text-center my-8">
+        <h1 class="text-5xl md:text-7xl font-bold text-gray-800 tracking-tight">AI Prompt Gallery</h1>
+        <p class="mt-4 text-lg text-gray-600">Explore and copy curated prompts for stunning AI-generated visuals.</p>
+    </header>
+    
+    <!-- Main Tabs for content sections -->
+    <div id="main-tabs-container" class="w-full max-w-5xl flex justify-center space-x-4 mb-4">
+        <button id="main-trending-tab" class="px-8 py-3 rounded-full font-medium tab-button active" onclick="showSection('trending')">
+            Trending
+        </button>
+        <button id="main-videos-tab" class="px-8 py-3 rounded-full font-medium tab-button" onclick="showSection('videos')">
+            Videos
+        </button>
+        <button id="main-images-tab" class="px-8 py-3 rounded-full font-medium tab-button" onclick="showSection('images')">
+            Images
+        </button>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="main-content" class="w-full max-w-5xl">
+
+        <!-- Trending Section (Default) -->
+        <section id="trending-section" class="w-full mx-auto flex flex-col items-center p-4">
+            
+            <!-- Trending Images Section -->
+            <div class="w-full text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Trending Prompts</h2>
+                <p class="text-gray-600 mt-2">See what's popular in the AI art community.</p>
+            </div>
+            
+            <!-- Trending Images Content -->
+            <div id="trending-images-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Trending Image Card 1 (General) -->
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["./Assets/Trending/photo.jpg", "./Assets/Trending/photo-2.jpg", "./Assets/Trending/photo.jpg"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/photo.jpg" alt="Trending Image 1">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A captivating and abstract representation of a digital sunrise, with pixelated clouds and glowing geometric shapes. Trending, vibrant color palette, high-tech, digital art style.">
+                            A captivating and abstract representation of a digital sunrise, with pixelated clouds and glowing geometric shapes. Trending, vibrant color palette, high-tech, digital art style.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trending Image Card 2 (Boy) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Trending+Image+2", "https://placehold.co/800x600/1a1a1a/ffffff?text=Trending+Image+2-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Trending+Image+2" alt="Trending Image 2">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A portrait of a young man with a mysterious expression, wearing a stylish, flowing cloak. Trending, gothic fantasy, deep shadows, cinematic, high resolution.">
+                            A portrait of a young man with a mysterious expression, wearing a stylish, flowing cloak. Trending, gothic fantasy, deep shadows, cinematic, high resolution.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                       <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Image Card 3 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Trending+Girl", "https://placehold.co/800x600/1a1a1a/ffffff?text=Trending+Girl-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Trending+Girl" alt="Trending Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.">
+                            A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                        Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination for Trending -->
+            <div id="trending-pagination" class="flex justify-center space-x-3 mt-8 mb-12">
+            <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="1">1</button>
+            <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="2">2</button>
+            <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="3">3</button>
+            <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="4">4</button>
+            <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="5">5</button>
+            </div>
+
+        </section>
+
+        <!-- Videos Section -->
+        <section id="videos-section" class="w-full mx-auto flex flex-col items-center p-4 hidden">
+            
+            <!-- Video Category Tabs (Boys/Girls/All) -->
+            <div id="videos-tabs-container" class="w-full flex justify-center space-x-3 mb-8">
+                <button id="all-videos-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button active">
+                    All
+                </button>
+                <button id="boys-videos-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button">
+                    Boys
+                </button>
+                <button id="girls-videos-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button">
+                    Girls
+                </button>
+            </div>
+            
+            <div class="w-full text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Video Prompts</h2>
+                <p class="text-gray-600 mt-2">Explore stunning AI-generated videos.</p>
+            </div>
+            
+            <div id="videos-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Card 1 -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="1">
+                    <video class="w-full h-auto object-cover" controls>
+                        <source src="https://videos.pexels.com/video-files/20994191/20994191-sd_540_960_30fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A cinematic drone shot of a futuristic spaceship in deep space, hyper-realistic, high-quality, professional video, high resolution, film grain, wide shot, perfect lighting, dynamic motion, ultra-detailed.">
+                            A cinematic drone shot of a futuristic spaceship in deep space, hyper-realistic, high-quality, professional video, high resolution, film grain, wide shot, perfect lighting, dynamic motion, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="1">
+                    <video class="w-full h-auto object-cover" controls>
+                        <source src="https://videos.pexels.com/video-files/19717983/19717983-sd_540_960_30fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A dynamic shot of a luxury sports car speeding on a futuristic highway, cinematic footage, high-quality video, cinematic lighting, sleek design, motion blur, 4K resolution, captured with a RED camera.">
+                            A dynamic shot of a luxury sports car speeding on a futuristic highway, cinematic footage, high-quality video, cinematic lighting, sleek design, motion blur, 4K resolution, captured with a RED camera.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1">
+                    <video class="w-full h-auto object-cover" controls>
+                        <source src="https://videos.pexels.com/video-files/3832104/3832104-sd_540_960_24fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young girl playing with a drone in a lush, green park. Shot on an iPhone, soft natural lighting, golden hour, playful mood, high resolution, seamless loop.">
+                            A young girl playing with a drone in a lush, green park. Shot on an iPhone, soft natural lighting, golden hour, playful mood, high resolution, seamless loop.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="2">
+                    <video class="w-full h-auto object-cover" controls>
+                        <source src="https://videos.pexels.com/video-files/4034938/4034938-sd_540_960_30fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A woman walking in a crowded street in Tokyo at night, neon lights, motion blur, cyberpunk style, cinematic look, vibrant colors, high resolution.">
+                            A woman walking in a crowded street in Tokyo at night, neon lights, motion blur, cyberpunk style, cinematic look, vibrant colors, high resolution.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Pagination for Videos -->
+            <div id="video-pagination" class="flex justify-center space-x-3 mt-8 mb-12 hidden">
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="1">1</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="2">2</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="3">3</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="4">4</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="5">5</button>
+            </div>
+
+        <!-- Images Section -->
+        <section id="images-section" class="w-full mx-auto flex flex-col items-center p-4 hidden">
+
+            <!-- Images Category Tabs (Boys/Girls/All) -->
+            <div id="images-tabs-container" class="w-full flex justify-center space-x-3 mb-8">
+                <button id="all-images-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button active">
+                    All
+                </button>
+                <button id="boys-images-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button">
+                    Boys
+                </button>
+                <button id="girls-images-tab" class="px-5 py-2 text-sm rounded-full font-medium tab-button">
+                    Girls
+                </button>
+            </div>
+            
+            <div class="w-full text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Image Prompts</h2>
+                <p class="text-gray-600 mt-2">Explore stunning AI-generated images.</p>
+            </div>
+            
+            <div id="images-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 (General) -->
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Fantasy+Dragon", "https://placehold.co/800x600/1a1a1a/ffffff?text=Fantasy+Dragon-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Fantasy+Dragon" alt="Fantasy Dragon">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A majestic dragon, perched on a mountain peak, breathing fire. Cinematic fantasy art, dramatic lighting, detailed scales, fiery red and orange color palette, highly detailed, sharp focus, 8K resolution, inspired by artists like Greg Rutkowski.">
+                            A majestic dragon, perched on a mountain peak, breathing fire. Cinematic fantasy art, dramatic lighting, detailed scales, fiery red and orange color palette, highly detailed, sharp focus, 8K resolution, inspired by artists like Greg Rutkowski.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Card 2 (General) -->
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Cyberpunk+City", "https://placehold.co/800x600/1a1a1a/ffffff?text=Cyberpunk+City-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Cyberpunk+City" alt="Cyberpunk City">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A futuristic city street at night, bustling with flying vehicles and neon advertisements. Cyberpunk style, cinematic shot, moody blue and purple neon lighting, sharp details, wet asphalt reflections, wide angle lens, high contrast, ultra detailed, 4K.">
+                            A futuristic city street at night, bustling with flying vehicles and neon advertisements. Cyberpunk style, cinematic shot, moody blue and purple neon lighting, sharp details, wet asphalt reflections, wide angle lens, high contrast, ultra detailed, 4K.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 (General) -->
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Watercolor+Landscape", "https://placehold.co/800x600/1a1a1a/ffffff?text=Watercolor+Landscape-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Watercolor+Landscape" alt="Watercolor Landscape">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A serene forest landscape with a winding river and glowing fireflies. Soft watercolor painting style, vibrant and delicate colors, gentle lighting, dreamlike, high quality art.">
+                            A serene forest landscape with a winding river and glowing fireflies. Soft watercolor painting style, vibrant and delicate colors, gentle lighting, dreamlike, high quality art.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card for a Boy -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Stylish+Young+Man", "https://placehold.co/800x600/1a1a1a/ffffff?text=Stylish+Young+Man-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Stylish+Young+Man" alt="Stylish Young Man">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A stylish young man lounging on a plush, tufted beige armchair in a relaxed, confident pose. He is wearing a sharp, modern suit in a muted steel-blue shade with a black shirt underneath, slightly unbuttoned for a casual yet bold look. One leg is bent and resting on the chair while the other stretches outward, showing polished two-tone loafers. His expression is intense and contemplative, with one hand resting on his head and the other on his lap. The warm ambient lighting casts soft shadows enhancing the moody, cinematic vibe of the portrait. The background is simple, focusing attention on his strong presence and fashionable elegance.">
+                            A stylish young man lounging on a plush, tufted beige armchair in a relaxed, confident pose. He is wearing a sharp, modern suit in a muted steel-blue shade with a black shirt underneath, slightly unbuttoned for a casual yet bold look. One leg is bent and resting on the chair while the other stretches outward, showing polished two-tone loafers. His expression is intense and contemplative, with one hand resting on his head and the other on his lap. The warm ambient lighting casts soft shadows enhancing the moody, cinematic vibe of the portrait. The background is simple, focusing attention on his strong presence and fashionable elegance.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card for a Girl (new) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Stylish+Girl", "https://placehold.co/800x600/1a1a1a/ffffff?text=Stylish+Girl-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Stylish+Girl" alt="Stylish Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A beautiful young woman smiling, dressed in a fashionable pastel dress. Natural lighting, soft focus, high-quality portrait photography, bokeh effect in the background, happy and relaxed expression.">
+                            A beautiful young woman smiling, dressed in a fashionable pastel dress. Natural lighting, soft focus, high-quality portrait photography, bokeh effect in the background, happy and relaxed expression.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                       <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Card for a Girl (new) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=Girl+in+a+Cafe", "https://placehold.co/800x600/1a1a1a/ffffff?text=Girl+in+a+Cafe-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Girl+in+a+Cafe" alt="Girl in a Cafe">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.">
+                            A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card for Boy and Girl (new) -->
+                <div class="card overflow-hidden" data-category="all boys girls" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Couple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Couple" alt="A Couple taking a selfie">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.">
+                            A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                       <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Card with the new image -->
+                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.">
+                            A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Card with the new image -->
+                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.">
+                            A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Card with the new image -->
+                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.">
+                            A young man and a woman taking a selfie, blurred background, close-up shot, natural indoor lighting, soft focus, happy and casual vibe, high-quality portrait.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination for Images -->
+            <div id="image-pagination" class="flex justify-center space-x-3 mt-8 mb-12 hidden">
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="1">1</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="2">2</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="3">3</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="4">4</button>
+                <button class="px-5 py-2 rounded-lg bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors" data-page="5">5</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Help Section (Initially Hidden) -->
+    <section id="help-section" class="w-full max-w-5xl mx-auto p-6 hidden">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Help Center</h2>
+        <div class="space-y-6">
+            <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">How to use this website?</h3>
+                <p class="text-gray-700 leading-relaxed">This website provides a gallery of AI-generated images and videos with their corresponding prompts. You can browse through different categories like Images, Videos, and Trending. The trending section is always open by default. Use the Help and Contact buttons in the top navigation to get more information or to contact us.</p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">How to copy a prompt?</h3>
+                <p class="text-gray-700 leading-relaxed">To copy a prompt, simply click the "Copy Prompt" button located at the bottom of each card. A confirmation message will appear at the bottom of the screen when the prompt has been successfully copied.</p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">What is Dark Mode?</h3>
+                <p class="text-gray-700 leading-relaxed">You can toggle between light and dark themes using the circular switch in the top right corner. Dark mode makes the website easier on the eyes in low-light conditions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Modal (Initially Hidden) -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button text-gray-600 dark:text-gray-400" onclick="closeContactForm()">&times;</span>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Contact Us</h2>
+            <form id="contact-form" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-gray-700 font-semibold mb-1">Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Your Name" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-semibold mb-1">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="your.email@example.com" required>
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-700 font-semibold mb-1">Message</label>
+                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Your Message..." required></textarea>
+                </div>
+                <button type="submit" class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition-colors">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Copy confirmation message -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-800 text-white rounded-full shadow-lg transition-opacity duration-300 opacity-0 z-50">
+        Prompt copied!
+    </div>
+
+<!-- Footer -->
+<footer class="w-full bg-white dark:bg-[#1c1c1e] border-t border-gray-200 dark:border-[#2c2c2e]">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col items-center space-y-4">
+
+    <!-- Social Media Icons -->
+    <div class="flex space-x-6">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/your_handle" target="_blank" 
+         class="text-gray-500 hover:text-pink-500 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+        </svg>
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/your_handle" target="_blank" 
+         class="text-gray-500 hover:text-blue-600 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+        </svg>
+      </a>
+      <!-- Twitter -->
+      <a href="https://www.twitter.com/your_handle" target="_blank" 
+         class="text-gray-500 hover:text-sky-500 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+        </svg>
+      </a>
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/your_channel" target="_blank" 
+         class="text-gray-500 hover:text-red-600 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.6 3.04 15.32 3 12 3s-6.6.04-8.6 1.42a2.78 2.78 0 0 0-1.94 2A29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.4 20.96 8.68 21 12 21s6.6-.04 8.6-1.42a2.78 2.78 0 0 0 1.94-2A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"></path>
+          <polygon points="9.75 9.75 15.5 12 9.75 14.25 9.75 9.75"></polygon>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
+      © 2024 AI Prompt Gallery. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+
+    <script>
+        const cardsPerPage = 6;
+        let currentPage = {
+            images: 1,
+            videos: 1,
+            trending: 1
+        };
+        let currentCategory = {
+            images: 'all',
+            videos: 'all',
+            trending: 'all'
+        };
+
+        const mainSections = {
+            images: document.getElementById('images-section'),
+            videos: document.getElementById('videos-section'),
+            trending: document.getElementById('trending-section')
+        };
+        const paginations = {
+            images: document.getElementById('image-pagination'),
+            videos: document.getElementById('video-pagination'),
+            trending: document.getElementById('trending-pagination')
+        };
+        const mainTabs = {
+            images: document.getElementById('main-images-tab'),
+            videos: document.getElementById('main-videos-tab'),
+            trending: document.getElementById('main-trending-tab')
+        };
+        const subTabs = {
+            images: {
+                all: document.getElementById('all-images-tab'),
+                boys: document.getElementById('boys-images-tab'),
+                girls: document.getElementById('girls-images-tab')
+            },
+            videos: {
+                all: document.getElementById('all-videos-tab'),
+                boys: document.getElementById('boys-videos-tab'),
+                girls: document.getElementById('girls-videos-tab')
+            },
+            trending: {} // Trending section now has no sub-tabs
+        };
+
+        const helpSection = document.getElementById('help-section');
+        const videosCategoryTabs = document.getElementById('videos-tabs-container');
+        const imagesCategoryTabs = document.getElementById('images-tabs-container');
+        const contactModal = document.getElementById('contact-modal');
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        function setActiveTab(button) {
+            document.querySelectorAll('#main-tabs-container .tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (button) {
+                button.classList.add('active');
+            }
+        }
+        
+        function setActiveSubTab(section, category) {
+            const subTabContainer = document.getElementById(`${section}-tabs-container`);
+            if (subTabContainer) {
+                subTabContainer.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                const activeSubTab = subTabContainer.querySelector(`#${category}-${section}-tab`);
+                if (activeSubTab) {
+                    activeSubTab.classList.add('active');
+                }
+            }
+        }
+        
+        function showSection(sectionId) {
+            // Hide all main content sections and their containers
+            if (mainSections.trending) mainSections.trending.classList.add('hidden');
+            if (mainSections.videos) mainSections.videos.classList.add('hidden');
+            if (mainSections.images) mainSections.images.classList.add('hidden');
+            if (helpSection) helpSection.classList.add('hidden');
+            if (contactModal) contactModal.style.display = 'none';
+
+            // Hide all sub-tabs and paginations
+            if (paginations.trending) paginations.trending.classList.add('hidden');
+            if (paginations.videos) paginations.videos.classList.add('hidden');
+            if (paginations.images) paginations.images.classList.add('hidden');
+            if (imagesCategoryTabs) imagesCategoryTabs.classList.add('hidden');
+            if (videosCategoryTabs) videosCategoryTabs.classList.add('hidden');
+
+            // Show the requested section
+            if (mainSections[sectionId]) {
+                mainSections[sectionId].classList.remove('hidden');
+                if (paginations[sectionId]) paginations[sectionId].classList.remove('hidden');
+                
+                if (sectionId === 'trending') {} // No sub-tabs for trending
+                if (sectionId === 'videos' && videosCategoryTabs) videosCategoryTabs.classList.remove('hidden');
+                if (sectionId === 'images' && imagesCategoryTabs) imagesCategoryTabs.classList.remove('hidden');
+                
+                setActiveTab(mainTabs[sectionId]);
+                filterCards(sectionId, currentCategory[sectionId], currentPage[sectionId]);
+                if (sectionId === 'images' || sectionId === 'videos') {
+                     setActiveSubTab(sectionId, currentCategory[sectionId]);
+                }
+            } else if (sectionId === 'help') {
+                if (helpSection) helpSection.classList.remove('hidden');
+                setActiveTab(null);
+            } else if (sectionId === 'contact') {
+                openContactForm();
+                setActiveTab(null);
+            } else if (sectionId === 'home') {
+                // Default to trending for 'home'
+                showSection('trending');
+            }
+        }
+
+        function openContactForm() {
+            if (contactModal) contactModal.style.display = 'flex';
+            if (document.body.classList.contains('dark')) {
+                contactModal.querySelector('.modal-content').classList.add('dark');
+            } else {
+                contactModal.querySelector('.modal-content').classList.remove('dark');
+            }
+        }
+
+        function closeContactForm() {
+            if (contactModal) contactModal.style.display = 'none';
+        }
+
+        function filterCards(section, category, page) {
+            const container = mainSections[section];
+            if (!container) return;
+            const cards = Array.from(container.querySelectorAll('.card'));
+            
+            let filteredCards = cards;
+            if (category !== 'all') {
+                filteredCards = cards.filter(card => {
+                    const categories = card.dataset.category.split(' ');
+                    return categories.includes(category);
+                });
+            }
+            
+            const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+            
+            cards.forEach(card => {
+                card.classList.add('hidden');
+            });
+
+            const start = (page - 1) * cardsPerPage;
+            const end = start + cardsPerPage;
+
+            for (let i = start; i < end && i < filteredCards.length; i++) {
+                filteredCards[i].classList.remove('hidden');
+            }
+            
+            updatePaginationButtons(section, page, totalPages);
+        }
+
+        function updatePaginationButtons(section, activePage, totalPages) {
+            const paginationContainer = paginations[section];
+            if (!paginationContainer) return;
+
+            paginationContainer.innerHTML = '';
+            
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.dataset.page = i;
+                    button.textContent = i;
+                    button.className = `px-5 py-2 rounded-lg transition-colors ${i === activePage ? 'bg-gray-700 text-white dark:bg-gray-700 dark:text-gray-100' : 'bg-gray-300 text-gray-700 hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600'}`;
+                    paginationContainer.appendChild(button);
+                }
+            }
+        }
+        
+        function copyPrompt(buttonElement) {
+            const promptDiv = buttonElement.closest('.card').querySelector('[data-full-prompt]');
+            const textToCopy = promptDiv.dataset.fullPrompt;
+
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = textToCopy;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            }
+        }
+        window.copyPrompt = copyPrompt;
+
+        function openInAiPlatform(buttonElement, platform) {
+            const promptDiv = buttonElement.closest('.card').querySelector('[data-full-prompt]');
+            const prompt = promptDiv.dataset.fullPrompt;
+            const encodedPrompt = encodeURIComponent(prompt);
+            let url = '';
+
+            switch (platform) {
+                case 'gemini':
+                    url = `https://gemini.google.com/app?prompt=${encodedPrompt}`;
+                    break;
+                case 'chatgpt':
+                    url = `https://chat.openai.com/?prompt=${encodedPrompt}`;
+                    break;
+                case 'perplexity':
+                    url = `https://www.perplexity.ai/search?q=${encodedPrompt}`;
+                    break;
+            }
+            
+            if (url) {
+                window.open(url, '_blank');
+            }
+        }
+        window.openInAiPlatform = openInAiPlatform;
+        window.openContactForm = openContactForm;
+        window.closeContactForm = closeContactForm;
+        
+        // Slider functionality
+        function nextSlide(button) {
+            const card = button.closest('.card');
+            const sliderImage = card.querySelector('.slider-image');
+            const images = JSON.parse(card.dataset.images);
+            let currentSlide = parseInt(card.dataset.currentSlide || 0);
+
+            currentSlide = (currentSlide + 1) % images.length;
+            sliderImage.src = images[currentSlide];
+            card.dataset.currentSlide = currentSlide;
+        }
+
+        function prevSlide(button) {
+            const card = button.closest('.card');
+            const sliderImage = card.querySelector('.slider-image');
+            const images = JSON.parse(card.dataset.images);
+            let currentSlide = parseInt(card.dataset.currentSlide || 0);
+
+            currentSlide = (currentSlide - 1 + images.length) % images.length;
+            sliderImage.src = images[currentSlide];
+            card.dataset.currentSlide = currentSlide;
+        }
+        window.nextSlide = nextSlide;
+        window.prevSlide = prevSlide;
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Event listeners for main tabs
+            if (mainTabs.trending) mainTabs.trending.addEventListener('click', () => showSection('trending'));
+            if (mainTabs.videos) mainTabs.videos.addEventListener('click', () => showSection('videos'));
+            if (mainTabs.images) mainTabs.images.addEventListener('click', () => showSection('images'));
+
+            // Event listeners for sub-tabs
+            for (const section in subTabs) {
+                if (subTabs[section]) {
+                    for (const category in subTabs[section]) {
+                        if (subTabs[section][category]) {
+                            subTabs[section][category].addEventListener('click', () => {
+                                currentCategory[section] = category;
+                                currentPage[section] = 1;
+                                setActiveSubTab(section, category);
+                                filterCards(section, category, currentPage[section]);
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Event listeners for pagination
+            for (const section in paginations) {
+                if (paginations[section]) {
+                    paginations[section].addEventListener('click', (e) => {
+                        if (e.target.tagName === 'BUTTON') {
+                            const page = parseInt(e.target.dataset.page);
+                            currentPage[section] = page;
+                            filterCards(section, currentCategory[section], currentPage[section]);
+                        }
+                    });
+                }
+            }
+            
+            // Initial view: Load Trending section by default
+            showSection('trending');
+            
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark');
+                    themeToggle.classList.toggle('dark-active');
+                    const contactModalContent = document.getElementById('contact-modal').querySelector('.modal-content');
+                    if (contactModalContent) contactModalContent.classList.toggle('dark');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

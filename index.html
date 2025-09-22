@@ -245,9 +245,9 @@
             <!-- Trending Images Content -->
             <div id="trending-images-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Trending Image Card 1 (General) -->
-                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["./Assets/Trending/photo.jpg", "./Assets/Trending/photo-2.jpg", "./Assets/Trending/photo_3.jpg"]'>
+                <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["./Assets/Trending/Card_1/Image-1.png", "./Assets/Trending/Card_1/Image-2.png", "./Assets/Trending/Card_1/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/photo.jpg" alt="Trending Image 1">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_1/Image-1.png" alt="Trending Image 1">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -275,9 +275,9 @@
                 </div>
                 
                 <!-- Trending Image Card 2 (Boy) -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Trending+Image+2", "https://placehold.co/800x600/1a1a1a/ffffff?text=Trending+Image+2-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["./Assets/Trending/Card_2/Image-1.png", "./Assets/Trending/Card_2/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Trending+Image+2" alt="Trending Image 2">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_2/Image-1.png" alt="Trending Image 2">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -305,9 +305,126 @@
                 </div>
 
                 <!-- Trending Image Card 3 (Girl) -->
-                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Trending+Girl", "https://placehold.co/800x600/1a1a1a/ffffff?text=Trending+Girl-2"]'>
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Trending/Card_3/Image-1.png", "./Assets/Trending/Card_3/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Trending+Girl" alt="Trending Girl">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_3/Image-1.png" alt="Trending Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.">
+                            A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                        Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                <!-- Trending Image Card 4 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Trending/Card_4/Image-1.png", "./Assets/Trending/Card_4/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_4/Image-1.png" alt="Trending Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.">
+                            A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                        Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                <!-- Trending Image Card 3 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Trending/Card_5/Image-1.png", "./Assets/Trending/Card_5/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_5/Image-1.png" alt="Trending Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.">
+                            A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                        Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                <!-- Trending Image Card 3 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Trending/Card_6/Image-1.png", "./Assets/Trending/Card_6/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_6/Image-1.png" alt="Trending Girl">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.">
+                            A young woman with a vibrant, neon-lit hairstyle and futuristic glasses, posing in a bustling city at night. Trending, cyberpunk portrait, glowing lights, high contrast, sharp details.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                        Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                <!-- Trending Image Card 3 (Girl) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Trending/Card_3/Image-1.png", "./Assets/Trending/Card_3/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Trending/Card_3/Image-1.png" alt="Trending Girl">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -371,7 +488,7 @@
                 <!-- Video Card 1 -->
                 <div class="card overflow-hidden" data-category="all boys" data-page="1">
                     <video class="w-full h-auto object-cover" controls>
-                        <source src="https://videos.pexels.com/video-files/20994191/20994191-sd_540_960_30fps.mp4" type="video/mp4">
+                        <source src="./Assets/Video/All/Man_on_Wicker_Sofa.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="p-5 flex flex-col h-full">
@@ -400,7 +517,7 @@
                 <!-- Video Card 2 -->
                 <div class="card overflow-hidden" data-category="all boys" data-page="1">
                     <video class="w-full h-auto object-cover" controls>
-                        <source src="https://videos.pexels.com/video-files/19717983/19717983-sd_540_960_30fps.mp4" type="video/mp4">
+                        <source src="./Assets/Video/All/Man_on_Wicker_Sofa.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="p-5 flex flex-col h-full">
@@ -429,7 +546,7 @@
                 <!-- Video Card 3 (Girl) -->
                 <div class="card overflow-hidden" data-category="all girls" data-page="1">
                     <video class="w-full h-auto object-cover" controls>
-                        <source src="https://videos.pexels.com/video-files/3832104/3832104-sd_540_960_24fps.mp4" type="video/mp4">
+                        <source src="./Assets/Video/All/Man_on_Wicker_Sofa.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="p-5 flex flex-col h-full">
@@ -458,7 +575,7 @@
                 <!-- Video Card 4 (Girl) -->
                 <div class="card overflow-hidden" data-category="all girls" data-page="2">
                     <video class="w-full h-auto object-cover" controls>
-                        <source src="https://videos.pexels.com/video-files/4034938/4034938-sd_540_960_30fps.mp4" type="video/mp4">
+                        <source src="./Assets/Video/All/Man_on_Wicker_Sofa.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="p-5 flex flex-col h-full">
@@ -517,7 +634,7 @@
             </div>
             
             <div id="images-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 (General) -->
+                <!-- Card 1 (General-All) -->
                 <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Fantasy+Dragon", "https://placehold.co/800x600/1a1a1a/ffffff?text=Fantasy+Dragon-2"]'>
                     <div class="slider-container">
                         <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Fantasy+Dragon" alt="Fantasy Dragon">
@@ -547,7 +664,7 @@
                     </div>
                 </div>
     
-                <!-- Card 2 (General) -->
+                <!-- Card 2 (General-All) -->
                 <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Cyberpunk+City", "https://placehold.co/800x600/1a1a1a/ffffff?text=Cyberpunk+City-2"]'>
                     <div class="slider-container">
                         <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Cyberpunk+City" alt="Cyberpunk City">
@@ -577,7 +694,7 @@
                     </div>
                 </div>
 
-                <!-- Card 3 (General) -->
+                <!-- Card 3 (General-All) -->
                 <div class="card overflow-hidden" data-category="all" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Watercolor+Landscape", "https://placehold.co/800x600/1a1a1a/ffffff?text=Watercolor+Landscape-2"]'>
                     <div class="slider-container">
                         <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Watercolor+Landscape" alt="Watercolor Landscape">
@@ -608,16 +725,16 @@
                 </div>
 
                 <!-- Card for a Boy -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Stylish+Young+Man", "https://placehold.co/800x600/1a1a1a/ffffff?text=Stylish+Young+Man-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="1" data-images='["./Assets/Image/Men/Card_Men_1/Image_2.png", "./Assets/Image/Men/Card_Men_1/Image_1.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Stylish+Young+Man" alt="Stylish Young Man">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_1/Image_1.png" alt="Stylish Young Man">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
                     <div class="p-5 flex flex-col h-full">
                         <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
                         <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A stylish young man lounging on a plush, tufted beige armchair in a relaxed, confident pose. He is wearing a sharp, modern suit in a muted steel-blue shade with a black shirt underneath, slightly unbuttoned for a casual yet bold look. One leg is bent and resting on the chair while the other stretches outward, showing polished two-tone loafers. His expression is intense and contemplative, with one hand resting on his head and the other on his lap. The warm ambient lighting casts soft shadows enhancing the moody, cinematic vibe of the portrait. The background is simple, focusing attention on his strong presence and fashionable elegance.">
-                            A stylish young man lounging on a plush, tufted beige armchair in a relaxed, confident pose. He is wearing a sharp, modern suit in a muted steel-blue shade with a black shirt underneath, slightly unbuttoned for a casual yet bold look. One leg is bent and resting on the chair while the other stretches outward, showing polished two-tone loafers. His expression is intense and contemplative, with one hand resting on his head and the other on his lap. The warm ambient lighting casts soft shadows enhancing the moody, cinematic vibe of the portrait. The background is simple, focusing attention on his strong presence and fashionable elegance.
+                            Ultra-realistic full-body cinematic portrait of a 22-year-old young man (100% matching my face) standing beside the grand Durga idol during Durga Puja. He is wearing elegant traditional Bengali attire (white kurta with red festive uttorio), his posture graceful and confident. His face is crystal clear, glowing with devotion and sharp elegance. The Durga idol behind him radiates divine power and festive beauty, illuminated by golden-red light.
                         </div>
                         <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
                             Copy Prompt
@@ -638,9 +755,9 @@
                 </div>
 
                 <!-- Card for a Girl (new) -->
-                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["https://placehold.co/800x600/333333/ffffff?text=Stylish+Girl", "https://placehold.co/800x600/1a1a1a/ffffff?text=Stylish+Girl-2"]'>
+                <div class="card overflow-hidden" data-category="all girls" data-page="1" data-images='["./Assets/Image/Owmen/Card_Women_1/Image-1.png", "./Assets/Image/Owmen/Card_Women_1/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Stylish+Girl" alt="Stylish Girl">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Owmen/Card_Women_1/Image-1.png" alt="Stylish Girl">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -667,9 +784,96 @@
                 </div>
 
                 <!-- Another Card for a Girl (new) -->
-                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=Girl+in+a+Cafe", "https://placehold.co/800x600/1a1a1a/ffffff?text=Girl+in+a+Cafe-2"]'>
+                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["./Assets/Image/Owmen/Card_Women_2/Image-1.png", "./Assets/Image/Owmen/Card_Women_2/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=Girl+in+a+Cafe" alt="Girl in a Cafe">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Owmen/Card_Women_2/Image-1.png" alt="Girl in a Cafe">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.">
+                            A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                            <!-- Another Card for a Girl (new) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["./Assets/Image/Owmen/Card_Women_3/Image-1.png", "./Assets/Image/Owmen/Card_Women_3/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Owmen/Card_Women_3/Image-1.png" alt="Girl in a Cafe">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.">
+                            A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                            <!-- Another Card for a Girl (new) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["./Assets/Image/Owmen/Card_Women_4/Image-1.png", "./Assets/Image/Owmen/Card_Women_4/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Owmen/Card_Women_2/Image-1.png" alt="Girl in a Cafe">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.">
+                            A young woman sitting in a cozy, sunlit cafe, reading a book. Cinematic still, warm lighting, detailed background, cozy aesthetic, high resolution, professional photography.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                            <!-- Another Card for a Girl (new) -->
+                <div class="card overflow-hidden" data-category="all girls" data-page="2" data-images='["./Assets/Image/Owmen/Card_Women_5/Image-1.png", "./Assets/Image/Owmen/Card_Women_5/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Owmen/Card_Women_5/Image-1.png" alt="Girl in a Cafe">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -696,10 +900,10 @@
                     </div>
                 </div>
             
-                <!-- Card for Boy and Girl (new) -->
-                <div class="card overflow-hidden" data-category="all boys girls" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Couple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                <!-- Card for Boy(new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_2/Image_1.png", "./Assets/Image/Men/Card_Men_2/Image_2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Couple" alt="A Couple taking a selfie">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_2/Image_1.png" alt="A Couple taking a selfie">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -727,9 +931,9 @@
                 </div>
 
                 <!-- Another Card for a Boy (new) -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_3/Image-1.png", "./Assets/Image/Men/Card_Men_3/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_3/Image-1.png" alt="A Man at a Temple">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -756,10 +960,10 @@
                     </div>
                 </div>
 
-                <!-- New Card with the new image -->
-                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                <!-- New Card with the new image (boys) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="3" data-images='["/Assets/Image/Men/Card_Men_4/Image-1.png", "/Assets/Image/Men/Card_Men_4/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_4/Image-1.png" alt="A Couple taking a selfie">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -787,9 +991,9 @@
                 </div>
 
                 <!-- Another Card for a Boy (new) -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_5/Image-1.png", "./Assets/Image/Men/Card_Men_5/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_5/Image-1.png" alt="A Man at a Temple">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -816,10 +1020,10 @@
                     </div>
                 </div>
 
-                <!-- New Card with the new image -->
-                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                <!-- New Card with the new image (boys)-->
+                <div class="card overflow-hidden" data-category="all boys" data-page="3" data-images='["./Assets/Image/Men/Card_Men_6/Image-1.png", "./Assets/Image/Men/Card_Men_6/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_6/Image-1.png" alt="A Couple taking a selfie">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -847,9 +1051,9 @@
                 </div>
 
                 <!-- Another Card for a Boy (new) -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_7/Image-1.png", "./Assets/Image/Men/Card_Men_7/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_7/Image-1.png" alt="A Man at a Temple">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -877,9 +1081,9 @@
                 </div>
 
                 <!-- New Card with the new image -->
-                <div class="card overflow-hidden" data-category="all boys girls" data-page="3" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Couple-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="3" data-images='["./Assets/Image/Men/Card_Men_8/Image-1.png", "./Assets/Image/Men/Card_Men_8/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Girl+and+A+Boy" alt="A Couple taking a selfie">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_8/Image-1.png" alt="A Couple taking a selfie">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
@@ -907,9 +1111,129 @@
                 </div>
 
                 <!-- Another Card for a Boy (new) -->
-                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple", "https://placehold.co/800x600/1a1a1a/ffffff?text=A+Man+at+a+Temple-2"]'>
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_9/Image-1.png", "./Assets/Image/Men/Card_Men_9/Image-2.png"]'>
                     <div class="slider-container">
-                        <img class="slider-image w-full h-auto object-cover" src="https://placehold.co/800x600/333333/ffffff?text=A+Man+at+a+Temple" alt="A Man at a Temple">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_9/Image-1.png" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                              <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_10/Image-1.png", "./Assets/Image/Men/Card_Men_10/Image-1.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_10/Image-1.png" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                              <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_11/Image-1.png", "./Assets/Image/Men/Card_Men_11/Image-1.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_11/Image-1.png" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                              <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_9/Image-1.png", "./Assets/Image/Men/Card_Men_9/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_9/Image-1.png" alt="A Man at a Temple">
+                        <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
+                        <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
+                    </div>
+                    <div class="p-5 flex flex-col h-full">
+                        <p class="text-sm text-gray-500 font-medium mb-2">Prompt:</p>
+                        <div class="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3 rounded-lg flex-grow overflow-y-auto max-h-24" data-full-prompt="A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.">
+                            A young man sitting on the steps of a temple, with a peacock spreading its feathers in the background. Natural morning lighting, high-quality photography, deep shadows, cinematic, clear focus, ultra-detailed.
+                        </div>
+                        <button onclick="copyPrompt(this)" class="copy-button text-white font-medium py-2 px-4 rounded-lg shadow-sm w-full mt-4">
+                            Copy Prompt
+                        </button>
+                        <!-- Social Media Links -->
+                        <div class="flex justify-center space-x-6 mt-4 pt-4">
+                            <button onclick="openInAiPlatform(this, 'gemini')" aria-label="Gemini">
+                                <img src="https://img.icons8.com/?size=100&id=rnK88i9FvAFO&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'chatgpt')" aria-label="ChatGPT">
+                                <img src="https://img.icons8.com/?size=100&id=ka3InxFU3QZa&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                            <button onclick="openInAiPlatform(this, 'perplexity')" aria-label="Perplexity">
+                                <img src="https://img.icons8.com/?size=100&id=5WrDC03cg9ua&format=png&color=000000" alt="Gemini Icon" class="h-8 w-8 hover:opacity-80 transition-opacity" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                              <!-- Another Card for a Boy (new) -->
+                <div class="card overflow-hidden" data-category="all boys" data-page="2" data-images='["./Assets/Image/Men/Card_Men_9/Image-1.png", "./Assets/Image/Men/Card_Men_9/Image-2.png"]'>
+                    <div class="slider-container">
+                        <img class="slider-image w-full h-auto object-cover" src="./Assets/Image/Men/Card_Men_9/Image-1.png" alt="A Man at a Temple">
                         <button class="slider-nav-btn slider-prev-btn" onclick="prevSlide(this)">&#10094;</button>
                         <button class="slider-nav-btn slider-next-btn" onclick="nextSlide(this)">&#10095;</button>
                     </div>
